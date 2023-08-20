@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="outputDIV"></div>
+    <button onclick="getData()">Click me</button>
+    <script>
+        const apiURL = "https://jsonplaceholder.typicode.com/todos";
+
+        const getData = async () => {
+            try{
+                const resp = await fetch(apiURL);
+                if(!resp.ok){
+                    throw new Error("Something went wrong.");
+                }
+                let data = await resp.json();
+                let txt = "";
+                for(let x of data){
+                    if(x.completed){
+                        x.title = 'Salesforce Dev';
+                        txt += JSON.stringify(x) + ",";
+                    }                
+                }
+                //const newData = JSON.parse(txt);
+                console.log('@@Data::-'+txt);
+
+                //UI
+                const outputDIV = document.getElementById('outputDIV');
+                outputDIV.innerHTML = txt; //JSON.stringify(txt);
+            } catch(er){
+                console.log('@@Error::-'+er);
+            }
+        }
+
+        //getData();
+    </script>
+</body>
+</html>
